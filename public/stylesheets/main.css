@@ -1,0 +1,21 @@
+.leftside,
+.rightside {
+    min-height: 50vh;
+    width: 100%;
+    padding: 5px;
+}
+
+@media screen and (min-width:768px) {
+    .leftside,
+    .rightside {
+        height: calc(100vh - 57px);
+        border-right: 0px solid #ddd;
+        padding: 20px;
+    }
+}
+
+.leftside {
+    border-right: 1px solid #ddd;
+}
+
+.rightside {}

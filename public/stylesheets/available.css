@@ -1,0 +1,68 @@
+.search-div {
+    padding: 10px;
+}
+
+.available-heading {
+    text-align: center;
+    font-size: 20px;
+    color: #009688;
+}
+
+.clear-icon {
+    font-size: 10px;
+}
+
+.btn:focus {
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.custom-input-style {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.available-div {
+    height: 300px;
+    overflow: auto;
+}
+
+@media screen and (min-width:768px) {
+    .available-div {
+        height: calc(100% - 100px);
+        overflow: auto;
+    }
+}
+
+.doctor-info .name {
+    color: #E91E63;
+    padding: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.doctor-info .desc {
+    padding: 4px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.doctor-info {
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+}
+
+.available-doctor-icon {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.available-dot {
+    color: #009688;
+    background: #fff;
+    padding: 2px;
+    float: right;
+    font-size: 12px;
+}

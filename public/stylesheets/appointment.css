@@ -1,0 +1,50 @@
+.appointment-heading {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #673AB7;
+    font-size: 20px;
+}
+
+.appointment {
+    margin-bottom: 2px;
+    display: flex;
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, .1)!important;
+    background: #673ab72e;
+    padding: 10px;
+}
+
+.appointments-div {
+    height: calc(100% - 100px);
+    overflow: auto;
+}
+
+.appointment .date {
+    flex: 1;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.appointment .time {
+    flex: 1;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.appointment .name {
+    flex: 2;
+    font-size: 14px;
+    color: #E91E63;
+    font-weight: 600;
+    padding-right: 10px;
+}
+
+.appointment-active {
+    color: #2196F3;
+    cursor: pointer;
+}
+
+.appointment .status {
+    flex: 2;
+    font-size: 14px;
+}

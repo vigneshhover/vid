@@ -1,0 +1,19 @@
+link(rel='stylesheet', href='/stylesheets/preloading.css')
+.container
+  .loader
+    .loader--dot
+    .loader--dot
+    .loader--dot
+    .loader--dot
+    .loader--dot
+    .loader--dot
+    .loader--text
+script.
+    sessionStorage.setItem('UserDetails', JSON.stringify(!{JSON.stringify(userProfiles)}));
+    sessionStorage.setItem('availableDoctors', JSON.stringify(!{JSON.stringify(availableDoctors)}));
+    let ugroup = !{JSON.stringify(userProfiles)}.ugroup;
+    if(ugroup==="doctor"){
+     window.location.href = '/doctor';
+    }else if(ugroup === "client"){
+      window.location.href = '/home';
+    }

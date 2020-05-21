@@ -1,0 +1,29 @@
+link(rel='stylesheet', href='/stylesheets/login.css')
+.global-container
+    .card.login-form
+      .card-body
+        //h3.card-title.text-center Log in    
+        .logo-div.text-center
+          img.login-logo(src='https://www.kauveryhospital.com/images/Kauvery_Logo.png' alt='login image')
+        .card-text  
+          if(errorMsg)
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert') #{errorMsg}.
+          
+          form(action='/app' method='POST')
+            // to error: add class "has-danger"            
+            .form-group
+              label(for='exampleInputEmail1') Username
+              input.custom-input-style.form-control.form-control-sm(type='text' name='userName'  value='' required autofocus)
+            .form-group
+              label(for='exampleInputPassword1') Password
+              a(href='#' style='float:right;font-size:12px;') Forgot password?
+              input.custom-input-style.form-control.form-control-sm(type='password' name='passWord'  value='' required)
+            button.btn.login-btn.btn-block(type='submit') Sign in
+            .sign-up
+              | Don&apos;t have an account? 
+              a(href='#') Create One
+script.
+  $(document).ready(function(){
+    console.log('hi')
+    console.log(#{userProfiles})
+  })

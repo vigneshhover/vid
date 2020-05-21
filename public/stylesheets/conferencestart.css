@@ -1,0 +1,99 @@
+.conferencestart-heading {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #009688;
+    font-size: 20px;
+}
+
+.doctor-info {
+    text-align: center;
+}
+
+.doctor-info .name {
+    color: #E91E63;
+    padding: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.avail-time-div {
+    margin-top: 30px;
+}
+
+.avail-time-div .time {
+    text-align: center;
+}
+
+.doctor-info .desc {
+    padding: 4px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.doctor-info {
+    padding: 5px;
+}
+
+.available-doctor-icon {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.available-time-icon {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.available-blink-div {
+    margin-top: 30px;
+}
+
+.blink {
+    text-align: center;
+}
+
+.blinktext {
+    font-size: 20px;
+    color: #2196F3;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.timer-div {
+    border: 2px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.play-btn {
+    background: #2196F3;
+    color: #fff;
+}
+
+.timespenttxt {
+    text-transform: uppercase;
+    color: #9E9E9E;
+    padding: 10px;
+}
+
+.timer {
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: 10px;
+    color: #E91E63;
+}

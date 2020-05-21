@@ -1,0 +1,30 @@
+.calenderslotdiv .calenderhead {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+}
+
+.calenderslotdiv {
+    background: #ddd;
+}
+
+.calenderslotdiv .calenderhead .datediv {
+    flex: 1;
+}
+
+.calenderslotdiv .calenderhead .datediv .dateslotdiv {
+    border-bottom: 2px solid;
+    padding: 10px;
+}
+
+.calenderslotdiv .calenderhead .datediv .dateslotdiv .date {
+    font-weight: 600;
+}
+
+.calenderslotdiv .calenderhead .datediv .timeslotdiv {}
+
+.calenderslotdiv .calenderhead .datediv .timeslotdiv .timeslot {
+    margin: 10px;
+    padding: 5px;
+    background: #ffeb3b;
+}

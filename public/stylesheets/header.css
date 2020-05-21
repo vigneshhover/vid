@@ -1,0 +1,58 @@
+.header {
+    display: flex;
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, .1)!important;
+    position: sticky;
+    top: 0;
+    z-index: 555;
+}
+
+.fileno {
+    flex: 1;
+}
+
+.patient-info {
+    flex: 2;
+}
+
+.patient-info p {
+    text-align: right;
+}
+
+.patient-info p .name,
+.patient-info p .gender,
+.patient-info p .age {
+    padding-right: 25px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.file-icon,
+.person-icon {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.file-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@media screen and (max-width:768px) {
+    .header {
+        flex-direction: column;
+    }
+    .patient-info p {
+        text-align: left;
+    }
+    .patient-info p .name,
+    .patient-info p .gender,
+    .patient-info p .age {
+        padding-right: 5px;
+    }
+    .file-icon,
+    .person-icon {
+        display: none;
+    }
+}

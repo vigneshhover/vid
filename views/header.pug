@@ -1,0 +1,26 @@
+link(rel='stylesheet', href='/stylesheets/header.css')
+.header.p-3.bg-white
+    .fileno
+        p.file-name
+            img.file-icon(src='https://icons.iconarchive.com/icons/zhoolego/material/512/Filetype-Docs-icon.png' alt='File Icon')
+            span.mrNo MR No. 394999
+    .patient-info
+        p
+            img.person-icon(src='https://img.pngio.com/login-png-login-png-260_260.png' alt='File Icon')
+            small.name
+                b Kumaravelmani 
+            small.gender Gender: 
+                b Male
+            small.age Age: 
+                b 39
+script.
+   let user = JSON.parse(sessionStorage.getItem("UserDetails"));
+   $(".mrNo").text("MR No. "  + user.userid)
+   $(".name b").text(user.username)
+   $(".gender b").text( user.gender)
+   $(".age b").text( user.age)
+
+    
+
+        
+        

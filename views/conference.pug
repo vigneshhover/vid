@@ -1,0 +1,16 @@
+include layout
+link(rel='stylesheet', href='/stylesheets/main.css')
+include header
+.row.no-gutters
+  .col-md-4.no-gutters
+    .leftside
+      include conferenceStart
+  .col-md-8.no-gutters
+    .rightside
+      include conferenceVideo
+script(src='/socket.io/socket.io.js')
+
+script(src='bundle.js')
+script.
+  document.getElementById("userTypeSubmit").click();
+

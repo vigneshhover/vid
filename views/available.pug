@@ -1,0 +1,55 @@
+link(rel='stylesheet', href='/stylesheets/available.css')
+h4.available-heading Doctors Available
+hr
+.search-div
+    .input-group
+        input.form-control.custom-input-style#filterSearch(type='text' placeholder='Search...')(onkeyup='filterDoctor()')
+        button.btn.bg-transparent(style='margin-left: -40px; z-index: 100;')(onclick='inputClear()')
+            i.fa.fa-times.clear-icon
+.available-div
+script.
+   let availableDoctors = JSON.parse(sessionStorage.getItem("availableDoctors"));
+   availableDoctors.map(a=>{
+      $(".available-div").append(`<div class="doctor-info" onclick = 'redirect()'>
+        <p class="name"> <img class="available-doctor-icon" src="https://img.favpng.com/17/3/18/computer-icons-user-profile-male-png-favpng-ZmC9dDrp9x27KFnnge0jKWKBs.jpg" alt="available-doctor-icon" /><i class="fa fa-circle available-dot" aria-hidden="true"></i>Dr ${a.username}</p>
+        <p class="desc">M.B.B.S., M.D.(General Medicine),D.N.B.(Nephrology)</p>
+        </div>`)
+      });
+   
+  function redirect(){
+    location.href="/conference"
+  }
+  function inputClear(){
+    $("#filterSearch").val('');
+    filterDoctor();
+  }
+
+  function filterDoctor(){
+    let inputval = $("#filterSearch").val();
+    if(inputval && inputval.length >= 3){
+      let filter = inputval.toUpperCase()
+        let a = availableDoctors.filter(a=>
+        a.username.toUpperCase().indexOf(filter) > -1
+      );
+      if(a.length > 0){
+      $(".available-div").empty();
+          a.map(a=>{
+            $(".available-div").append(`<div class="doctor-info" onclick = 'redirect()'>
+              <p class="name"> <img class="available-doctor-icon" src="https://img.favpng.com/17/3/18/computer-icons-user-profile-male-png-favpng-ZmC9dDrp9x27KFnnge0jKWKBs.jpg" alt="available-doctor-icon" /><i class="fa fa-circle available-dot" aria-hidden="true"></i>Dr ${a.username}</p>
+              <p class="desc">M.B.B.S., M.D.(General Medicine),D.N.B.(Nephrology)</p>
+            </div>`)
+          });
+      }else{
+        $(".available-div").empty();
+      }   
+    }else{
+      $(".available-div").empty();
+      availableDoctors.map(a=>{
+        $(".available-div").append(`<div class="doctor-info" onclick = 'redirect()'>
+          <p class="name"> <img class="available-doctor-icon" src="https://img.favpng.com/17/3/18/computer-icons-user-profile-male-png-favpng-ZmC9dDrp9x27KFnnge0jKWKBs.jpg" alt="available-doctor-icon" /><i class="fa fa-circle available-dot" aria-hidden="true"></i>Dr ${a.username}</p>
+          <p class="desc">M.B.B.S., M.D.(General Medicine),D.N.B.(Nephrology)</p>
+          </div>`)
+        });
+      }    
+  }
+  

@@ -1,0 +1,17 @@
+.out-video-div {
+    width: 800px;
+    height: 1200px;
+}
+
+.in-video-div {
+    height: 300px;
+    width: 300px;
+}
+
+.video-div {
+    display: flex;
+}
+
+video {
+    width: 100%;
+  }
