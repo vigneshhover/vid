@@ -18,4 +18,11 @@
     border-right: 1px solid #ddd;
 }
 
+.muteBtn,
+.unmuteBtn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
 .rightside {}

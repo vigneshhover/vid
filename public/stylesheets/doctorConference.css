@@ -1,0 +1,32 @@
+#user-list {
+    position: fixed;
+    bottom: 0;
+    background: #ddd;
+    width: 100%;
+    text-align: center;
+}
+
+.callingUsername {
+    color: #9C27B0;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#userDetails {
+    padding: 15px;
+}
+
+#acceptButton,
+#rejectButton {
+    padding: 5px 25px;
+    margin: 10px;
+}
+
+.muteBtn,
+.unmuteBtn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}

@@ -1,5 +1,6 @@
 include layout
 link(rel='stylesheet', href='/stylesheets/main.css')
+link(rel='stylesheet', href='/stylesheets/doctorConference.css')
 include header
 .row.no-gutters
     .col-md-8.no-gutters
@@ -8,6 +9,8 @@ include header
     .col-md-4.no-gutters
         .leftside
             include doctorConferenceStart
+div(id="user-list")
+div(id="muteBtn")
 script(src='/socket.io/socket.io.js')
 
 script(src='bundle.js')

@@ -61,9 +61,19 @@ io.on('connection', function(socket) {
 
     })
 
+   socket.on("doctorRejected", function(data) {
 
+        socket.to(socketUser[data.clientId]).emit("doctorRejectedToClient", data)
 
-    socket.on('doctorAccepted', function(data, connectionData) {
+    })
+
+    socket.on('doctorDisconnected', function(connectionData) {
+
+        socket.to(socketUser[connectionData.clientId]).emit("doctorDisconnectedToClient",connectionData)
+
+    })
+
+     socket.on('doctorAccepted', function(data, connectionData) {
 
         socket.to(socketUser[connectionData.clientId]).emit("doctorScreen", data, connectionData)
 

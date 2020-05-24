@@ -1,7 +1,18 @@
 (function() {
     function r(e, n, t) {
-        function o(i, f) { if (!n[i]) { if (!e[i]) { var c = "function" == typeof require && require; if (!f && c) return c(i, !0); if (u) return u(i, !0); var a = new Error("Cannot find module '" + i + "'"); throw a.code = "MODULE_NOT_FOUND", a } var p = n[i] = { exports: {} };
-                e[i][0].call(p.exports, function(r) { var n = e[i][1][r]; return o(n || r) }, p, p.exports, r, e, n, t) } return n[i].exports } for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]); return o } return r })()({
+        function o(i, f) {
+            if (!n[i]) {
+                if (!e[i]) { var c = "function" == typeof require && require; if (!f && c) return c(i, !0); if (u) return u(i, !0); var a = new Error("Cannot find module '" + i + "'"); throw a.code = "MODULE_NOT_FOUND", a }
+                var p = n[i] = { exports: {} };
+                e[i][0].call(p.exports, function(r) { var n = e[i][1][r]; return o(n || r) }, p, p.exports, r, e, n, t)
+            }
+            return n[i].exports
+        }
+        for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
+        return o
+    }
+    return r
+})()({
     1: [function(require, module, exports) {
         // originally pulled out of simple-peer
         module.exports = function getBrowserRTC() {
@@ -102,9 +113,11 @@
     5: [function(require, module, exports) {
         'use strict';
 
-        function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype);
+        function _inheritsLoose(subClass, superClass) {
+            subClass.prototype = Object.create(superClass.prototype);
             subClass.prototype.constructor = subClass;
-            subClass.__proto__ = superClass; }
+            subClass.__proto__ = superClass;
+        }
         var codes = {};
 
         function createErrorType(code, message, Base) {
@@ -2246,8 +2259,15 @@
     12: [function(require, module, exports) {
         'use strict';
 
-        function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function(sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; });
-                keys.push.apply(keys, symbols); } return keys; }
+        function ownKeys(object, enumerableOnly) {
+            var keys = Object.keys(object);
+            if (Object.getOwnPropertySymbols) {
+                var symbols = Object.getOwnPropertySymbols(object);
+                if (enumerableOnly) symbols = symbols.filter(function(sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; });
+                keys.push.apply(keys, symbols);
+            }
+            return keys;
+        }
 
         function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function(key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function(key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -2255,10 +2275,15 @@
 
         function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-        function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i];
+        function _defineProperties(target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
                 descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor); } }
+                descriptor.configurable = true;
+                if ("value" in descriptor) descriptor.writable = true;
+                Object.defineProperty(target, descriptor.key, descriptor);
+            }
+        }
 
         function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
         var _require = require('buffer'),
@@ -4742,6 +4767,7 @@
         let userId = new Date().getUTCMilliseconds();
         let userType = ''
         let MediaStream;
+        var doctorInCall = false;
         /**
          *
          * Get User type
@@ -4761,12 +4787,18 @@
          * User List
          */
         socket.on('userList', function(userList) {
+            if (document.querySelector("#requestConsultationbtn"))
+                document.querySelector("#requestConsultationbtn").remove();
             if (userType == 'client') {
                 for (let id of userList) {
                     if (userId != id) {
                         var btn = document.createElement("BUTTON");
+                        var elementWait = document.createElement("DIV");
+                        elementWait.id = "waitText";
+                        elementWait.innerHTML = "Please wait";
                         btn.innerHTML = `Request Consultation`;
                         btn.className = "btn btn-primary";
+                        btn.id = "requestConsultationbtn";
                         btn.onclick = function() {
                             if (userType == 'client' && userId != id) {
                                 // request to doctor
@@ -4775,7 +4807,10 @@
                                     clientId: userId
                                 }
                                 socket.emit('requestToDoctor', obj);
-                                btn.style.display = "none";
+                                document.querySelector("#requestConsultationbtn").remove();
+                                //btn.style.display = "none";
+
+                                document.getElementById("requestButton").append(elementWait);
                             } else if (userType == 'client' && userId != id) {
                                 alert("Please choose doctor")
                             } else {
@@ -4784,7 +4819,7 @@
                             // MakePeerUser(id)
                         };
                         // document.getElementById("requestButton").remove();
-                        document.getElementById("requestButton").innerHTML = "";
+                        //document.getElementById("requestButton").innerHTML = "";
                         document.getElementById("requestButton").append(btn);
                     }
                 }
@@ -4822,27 +4857,71 @@
                 .catch(err => document.write(err))
         }
 
-        socket.on("userDisconnected",function(data,connectionData){
-            console.log(data);
-            alert("User disconnected");
+        socket.on("doctorDisconnectedToClient", function(connectionData) {
+            // var myResult = confirm("Call is completed");
+            var x = document.getElementById("snackbar1");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+                window.location.href = "/home"
+            }, 5000);
+
+            console.log("disconnected")
+
+        });
+
+        socket.on("doctorRejectedToClient", function() {
+            //alert("Doctor is busy, please try after sometime")
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+                window.location.href = "/home"
+            }, 5000);
+            console.log("rejected")
+                //window.location.href = "/home"
         });
 
         /**
          * requestFromClient
          */
         socket.on('requestFromClient', function(userList) {
-            if (userType == 'doctor' && userId == userList.doctorId) {
+            if (userType == 'doctor' && userId == userList.doctorId && !doctorInCall) {
                 var btn = document.createElement("BUTTON");
                 btn.innerHTML = `Accept`;
-                btn.className="btn btn-primary";
+                btn.id = "acceptButton";
+                btn.className = "btn btn-primary";
+                var rejectButton = document.createElement("BUTTON");
+                rejectButton.innerHTML = `Reject`;
+                rejectButton.className = "btn btn-danger";
+                rejectButton.id = "rejectButton";
+                var userDetailsDiv = document.createElement("DIV");
+                var usernameSpan = document.createElement("SPAN");
+                usernameSpan.innerHTML = "Tamilarasi ...";
+                usernameSpan.className = "callingUsername"
+                userDetailsDiv.innerHTML = "Requesting call from ";
+                userDetailsDiv.id = "userDetails";
+                userDetailsDiv.append(usernameSpan);
                 btn.onclick = function() {
                     remoteVideo('doctor', userList);
-           
-                    remoteSteamDisconnet(userList);
-                    document.getElementById("user-list").innerHTML = '';
-                }
 
+                    remoteSteamDisconnet(userList);
+                    document.getElementById("acceptButton").remove();
+                    document.getElementById("rejectButton").remove();
+                    document.getElementById("userDetails").remove();
+                    doctorInCall = true;
+                }
+                rejectButton.onclick = function() {
+                    socket.emit("doctorRejected", userList);
+                    $("#user-list").empty();
+                }
+                document.getElementById("user-list").appendChild(userDetailsDiv);
                 document.getElementById("user-list").appendChild(btn);
+                document.getElementById("user-list").appendChild(rejectButton);
             }
         })
 
@@ -4850,12 +4929,15 @@
             var btn = document.createElement("BUTTON");
             btn.innerHTML = 'Disconnect';
             btn.className = "btn btn-danger";
-            
+
             btn.onclick = function() {
                 RemovePeer();
+                doctorInCall = false;
                 document.getElementById("disconnectButton").style.display = "none";
-                socket.emit("userDisconnected",connectionData,connectionData);
-        
+                socket.emit("doctorDisconnected", connectionData);
+                document.getElementById("muteButton").remove();
+               // alert("You have consulted 1hr");
+                location.reload();
 
             };
             document.getElementById("disconnectButton").innerHTML = "";
@@ -4866,10 +4948,11 @@
             // document.getElementById("peerVideo").remove();
             //   var videoElement = document.getElementById('peerVideo');
             // videoElement.removeAttribute('src'); // empty source
-            // document.getElementById("peerVideo").style.display = "none";
-            document.getElementById("peerVideo").remove();
-            document.getElementById("peerDiv").remove();
-            //   document.getElementById("peerDiv").style.display = "none";
+            //  document.getElementById("peerVideo").style.display = "none";
+            //document.getElementById("peerVideo").remove()
+            document.getElementById("peerVideo").remove()
+                // document.getElementById("peerDiv").remove()
+            document.getElementById("peerDiv").style.display = "none";
             // const tracks = stream.getTracks();
             MediaStream.forEach(function(track) {
                 track.stop();
@@ -4906,19 +4989,21 @@
                     function InitPeer(type) {
                         let peer = new Peer({ initiator: (type == 'init') ? true : false, stream: stream, trickle: false })
                         peer.on('stream', function(stream) {
-                            CreateVideo(stream)
+                            CreateVideo(stream, type)
                         })
                         return peer
                     }
 
-                    function CreateVideo(stream) {
-                        CreateDiv()
+                    function CreateVideo(stream, type) {
+                        CreateDiv(stream)
+
                         let video = document.createElement('video')
                         video.id = 'peerVideo'
                         video.srcObject = stream
                         video.setAttribute('class', 'embed-responsive-item')
+                        document.querySelector('#peerDiv').style.display = "block";
                         document.querySelector('#peerDiv').appendChild(video)
-//Destination video for both side
+
                         video.play()
                         video.addEventListener('click', () => {
                             if (video.volume != 0)
@@ -4931,6 +5016,7 @@
                      * show doctorScreen on client side
                      */
                     socket.on('doctorScreen', function(doctorStream, connectionData) {
+                            document.getElementById("waitText").innerHTML = "";
                             let peer = InitPeer('notInit');
                             peer.on('signal', (data) => {
                                 socket.emit('clientSharing', data, connectionData)
@@ -4952,12 +5038,45 @@
                 })
         }
 
-        function CreateDiv() {
-            let div = document.createElement('div')
-            div.setAttribute('class', "centered")
-            div.id = "muteText"
-            div.innerHTML = "Click to Mute/Unmute"
-            document.querySelector('#peerDiv').appendChild(div)
+        function CreateDiv(MediaStream) {
+            var btn = document.createElement("BUTTON");
+            var muteIcon = document.createElement("I");
+            var unmuteIcon = document.createElement("I");
+            unmuteIcon.className = "fa fa-microphone-slash";
+            muteIcon.className = "fa fa-microphone";
+            btn.append(muteIcon);
+            btn.className = "btn btn-primary muteBtn";
+            btn.id = "muteButton";
+            btn.onclick = function() {
+                console.log(btn.classList.value);
+                if (btn.classList.value.includes("unmuteBtn")) {
+                    console.log("muteBtn");
+                    MediaStream.getAudioTracks()[0].enabled = true;
+                    btn.classList.remove("btn");
+                    btn.classList.remove("btn-danger");
+                    btn.classList.remove("unmuteBtn");
+                    btn.innerHTML = "";
+                    btn.append(muteIcon);
+                    btn.className = "btn btn-primary muteBtn";
+
+                } else {
+                    console.log("unmuteBtn");
+
+
+
+
+                    MediaStream.getAudioTracks()[0].enabled = false;
+                    btn.classList.remove("btn");
+                    btn.classList.remove("btn-primary");
+                    btn.classList.remove("muteBtn");
+                    btn.innerHTML = "";
+                    btn.append(unmuteIcon);
+                    btn.className = "btn btn-danger unmuteBtn";
+                }
+            };
+
+            document.getElementById('muteBtn').appendChild(btn);
+
         }
     }, { "simple-peer": 21 }],
     29: [function(require, module, exports) {

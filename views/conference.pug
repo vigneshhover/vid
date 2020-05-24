@@ -1,5 +1,6 @@
 include layout
 link(rel='stylesheet', href='/stylesheets/main.css')
+link(rel='stylesheet', href='/stylesheets/snackBar.css')
 include header
 .row.no-gutters
   .col-md-4.no-gutters
@@ -8,6 +9,9 @@ include header
   .col-md-8.no-gutters
     .rightside
       include conferenceVideo
+div(id="muteBtn")
+#snackbar Doctor is busy, please try after sometime...
+#snackbar1 Call is completed...
 script(src='/socket.io/socket.io.js')
 
 script(src='bundle.js')
