@@ -1,4 +1,4 @@
-const loginService = require('../services/loginServices');
+const loginService = require('../services/LoginServices');
 const logger = require('../utility/logger');
 const jwt = require('jsonwebtoken');
 const commonServices = require('../services/commonServices');
