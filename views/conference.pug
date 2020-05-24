@@ -10,11 +10,12 @@ include header
     .rightside
       include conferenceVideo
 div(id="muteBtn")
+button(type="button",id="userTypeSubmit", style="display:none") submit
 #snackbar Doctor is busy, please try after sometime...
 #snackbar1 Call is completed...
 script(src='/socket.io/socket.io.js')
-
 script(src='bundle.js')
-script.
+script.  
   document.getElementById("userTypeSubmit").click();
+  
 

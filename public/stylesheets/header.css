@@ -56,3 +56,20 @@ p {
         display: none;
     }
 }
+
+.signoutBtn {
+    border: 1px solid #ddd;
+    padding: 4px 20px;
+    text-transform: uppercase;
+    color: #F44336;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.signoutBtn:hover {
+    border: 1px solid #F44336;
+    color: #fff;
+    background-color: #F44336;
+}

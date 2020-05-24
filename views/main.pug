@@ -8,3 +8,11 @@ include header
   .col-md-8.no-gutters
     .rightside
       include appointments
+
+button(type="submit",id="userTypeSubmit", style="display:none") submit
+script(src='/socket.io/socket.io.js')
+script(src='bundle.js')
+
+script.
+  document.getElementById("userTypeSubmit").click();
+  

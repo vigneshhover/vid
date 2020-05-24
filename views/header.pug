@@ -13,6 +13,7 @@ link(rel='stylesheet', href='/stylesheets/header.css')
                 b Male
             small.age Age: 
                 b 39
+            span.signoutBtn(onclick="logout()") signout
 script.
    let user = JSON.parse(sessionStorage.getItem("UserDetails"));
    $(".mrNo").text("MR No. "  + user.userid)

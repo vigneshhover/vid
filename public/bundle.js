@@ -4767,6 +4767,7 @@
         let userId = new Date().getUTCMilliseconds();
         let userType = ''
         let MediaStream;
+        let selectedDoctor = {}
         var doctorInCall = false;
         /**
          *
@@ -4775,54 +4776,115 @@
         document.getElementById('userTypeSubmit').onclick = function() {
             userType = JSON.parse(sessionStorage.getItem("UserDetails")).ugroup;
             userId = JSON.parse(sessionStorage.getItem("UserDetails")).userid;
+            UserDetails = JSON.parse(sessionStorage.getItem("UserDetails"));
+            availableDoctors = JSON.parse(sessionStorage.getItem("availableDoctors"));
             console.log(`UserType:: ${userType} and UserId: ${userId}`);
-
-            if (userType === 'client') {
+            console.log(window.location.pathname)
+            if (userType === 'client' && window.location.pathname === "/conference") {
                 remoteVideo('client')
             }
-            socket.emit('connectUser', userId);
+            socket.emit('connectUser', { UserDetails, availableDoctors });
             // showUserId(userId)
         };
         /**
          * User List
          */
-        socket.on('userList', function(userList) {
-            if (document.querySelector("#requestConsultationbtn"))
-                document.querySelector("#requestConsultationbtn").remove();
-            if (userType == 'client') {
-                for (let id of userList) {
-                    if (userId != id) {
-                        var btn = document.createElement("BUTTON");
-                        var elementWait = document.createElement("DIV");
-                        elementWait.id = "waitText";
-                        elementWait.innerHTML = "Please wait";
-                        btn.innerHTML = `Request Consultation`;
-                        btn.className = "btn btn-primary";
-                        btn.id = "requestConsultationbtn";
-                        btn.onclick = function() {
-                            if (userType == 'client' && userId != id) {
-                                // request to doctor
-                                let obj = {
-                                    doctorId: id,
-                                    clientId: userId
-                                }
-                                socket.emit('requestToDoctor', obj);
-                                document.querySelector("#requestConsultationbtn").remove();
-                                //btn.style.display = "none";
 
-                                document.getElementById("requestButton").append(elementWait);
-                            } else if (userType == 'client' && userId != id) {
-                                alert("Please choose doctor")
-                            } else {
-                                alert("Not Allowed")
-                            }
-                            // MakePeerUser(id)
-                        };
-                        // document.getElementById("requestButton").remove();
-                        //document.getElementById("requestButton").innerHTML = "";
-                        document.getElementById("requestButton").append(btn);
+        socket.on('userListDisplay', function(availableDoctors) {
+            $("#availableDoctorDiv").empty();
+            availableDoctors.map(a => {
+                $("#availableDoctorDiv").append(`<div class="doctor-info" onclick = 'redirect(${JSON.stringify(a)})'>
+                    <p class="name"> <img class="available-doctor-icon" src="https://img.favpng.com/17/3/18/computer-icons-user-profile-male-png-favpng-ZmC9dDrp9x27KFnnge0jKWKBs.jpg" alt="available-doctor-icon" /><i class="fa fa-circle ${a.status === "online"? "available-dot" : "not-available-dot"}" aria-hidden="true"></i>Dr ${a.username}</p>
+                    <p class="desc">M.B.B.S., M.D.(General Medicine),D.N.B.(Nephrology)</p>
+                    </div>`)
+            })
+        });
+        socket.on('logout', function() {
+            sessionStorage.clear()
+            location.href = "/login";
+        });
+        socket.on('userList', function(userList) {
+            if (userType == 'client' && window.location.pathname === "/conference") {
+                selectedDoctor = JSON.parse(sessionStorage.getItem("selectedDoctor"));
+
+                if (document.querySelector("#requestConsultationbtn"))
+                    document.querySelector("#requestConsultationbtn").remove();
+                if (selectedDoctor && selectedDoctor.userid && selectedDoctor.ugroup === "doctor") {
+                    console.log(selectedDoctor.status, selectedDoctor.userid, userList)
+                    let id = selectedDoctor.userid;
+                    var btn = document.createElement("BUTTON");
+                    if (userList.includes(selectedDoctor.userid)) {
+                        btn.removeAttribute("disabled");
+                        $('.available-blink-div .blink').empty();
+                        $('.available-blink-div .blink').append(`<span>&#128077;</span><span class="blinktext">Available</span>`);
+                    } else {
+                        btn.setAttribute("disabled", true);
+                        $('.available-blink-div .blink').empty();
+                        $('.available-blink-div .blink').append(`<span>&#128078; </span> <span class="blinktext">Not Available</span>`);
+
+
                     }
+                    var elementWait = document.createElement("DIV");
+                    elementWait.id = "waitText";
+                    elementWait.innerHTML = "Please wait";
+                    btn.innerHTML = `Request Consultation`;
+                    btn.className = "btn btn-primary";
+                    btn.id = "requestConsultationbtn";
+                    btn.onclick = function() {
+                        if (userType == 'client' && userId != id) {
+                            // request to doctor
+                            let obj = {
+                                doctorId: id,
+                                clientId: userId
+                            }
+                            socket.emit('requestToDoctor', obj);
+                            document.querySelector("#requestConsultationbtn").remove();
+                            //btn.style.display = "none";
+
+                            document.getElementById("requestButton").append(elementWait);
+                        }
+                        // MakePeerUser(id)
+                    };
+                    // document.getElementById("requestButton").remove();
+                    //document.getElementById("requestButton").innerHTML = "";
+                    document.getElementById("requestButton").append(btn);
+
                 }
+
+
+                // for (let id of userList) {
+                //     if (userId != id) {
+                //         var btn = document.createElement("BUTTON");
+                //         var elementWait = document.createElement("DIV");
+                //         elementWait.id = "waitText";
+                //         elementWait.innerHTML = "Please wait";
+                //         btn.innerHTML = `Request Consultation`;
+                //         btn.className = "btn btn-primary";
+                //         btn.id = "requestConsultationbtn";
+                //         btn.onclick = function() {
+                //             if (userType == 'client' && userId != id) {
+                //                 // request to doctor
+                //                 let obj = {
+                //                     doctorId: id,
+                //                     clientId: userId
+                //                 }
+                //                 socket.emit('requestToDoctor', obj);
+                //                 document.querySelector("#requestConsultationbtn").remove();
+                //                 //btn.style.display = "none";
+
+                //                 document.getElementById("requestButton").append(elementWait);
+                //             } else if (userType == 'client' && userId != id) {
+                //                 alert("Please choose doctor")
+                //             } else {
+                //                 alert("Not Allowed")
+                //             }
+                //             // MakePeerUser(id)
+                //         };
+                //         // document.getElementById("requestButton").remove();
+                //         //document.getElementById("requestButton").innerHTML = "";
+                //         document.getElementById("requestButton").append(btn);
+                //     }
+                // }
             }
         })
 
@@ -4936,7 +4998,7 @@
                 document.getElementById("disconnectButton").style.display = "none";
                 socket.emit("doctorDisconnected", connectionData);
                 document.getElementById("muteButton").remove();
-               // alert("You have consulted 1hr");
+                alert("You have consulted 1hr");
                 location.reload();
 
             };
@@ -7508,3 +7570,10 @@
         process.umask = function() { return 0; };
     }, {}]
 }, {}, [28]);
+
+function logout() {
+    let logoutUser = JSON.parse(sessionStorage.getItem("UserDetails"));
+    let availableDoctors = JSON.parse(sessionStorage.getItem("availableDoctors"));
+    let socket = io()
+    socket.emit('logout', { logoutUser, availableDoctors });
+}

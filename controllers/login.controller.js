@@ -10,6 +10,18 @@ const users = [{
         "name": "",
         "userid": 101
     }, {
+        "ugroup": "doctor",
+        "uroles": "doctor",
+        "username": "Ramesh",
+        "name": "",
+        "userid": 102
+    }, {
+        "ugroup": "doctor",
+        "uroles": "doctor",
+        "username": "Ravi",
+        "name": "",
+        "userid": 103
+    }, {
         "ugroup": "client",
         "uroles": "client",
         "username": "Kumaravelmani",

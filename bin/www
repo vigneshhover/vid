@@ -28,52 +28,41 @@ let user = [];
 
 io.on('connection', function(socket) {
 
-
-    socket.on("connectUser", function(userId) {
-
+    socket.on("connectUser", function(params) {
+        let { UserDetails, availableDoctors } = params;
+        let userId = UserDetails.userid;
         socketUser[userId] = socket.id;
-
         if (user.indexOf(userId) < 0) {
-
             user.push(userId);
-
         }
-
         socket.emit('userList', user);
-
         socket.broadcast.emit('userList', user);
-
-
+        availableDoctors.map(a => {
+            user.includes(a.userid) ? a.status = "online" : a.status = "offline";
+        });
+        socket.emit('userListDisplay', availableDoctors);
+        socket.broadcast.emit('userListDisplay', availableDoctors);
     })
 
 
     socket.on("requestToDoctor", function(data) {
-
         socket.to(socketUser[data.doctorId]).emit("requestFromClient", data)
-
-
     })
 
 
     socket.on("requestAccept", function(data) {
-
         socket.to(socketUser[data.doctorId]).emit("requestFromClient", data)
-
     })
 
-   socket.on("doctorRejected", function(data) {
-
+    socket.on("doctorRejected", function(data) {
         socket.to(socketUser[data.clientId]).emit("doctorRejectedToClient", data)
-
     })
 
     socket.on('doctorDisconnected', function(connectionData) {
-
-        socket.to(socketUser[connectionData.clientId]).emit("doctorDisconnectedToClient",connectionData)
-
+        socket.to(socketUser[connectionData.clientId]).emit("doctorDisconnectedToClient", connectionData)
     })
 
-     socket.on('doctorAccepted', function(data, connectionData) {
+    socket.on('doctorAccepted', function(data, connectionData) {
 
         socket.to(socketUser[connectionData.clientId]).emit("doctorScreen", data, connectionData)
 
@@ -94,13 +83,30 @@ io.on('connection', function(socket) {
 
 
     socket.on('OfferUser', function(data, userId) {
-
         socket.to(socketUser[userId]).emit("BackOffer", data)
-
     })
 
 
     socket.on('Answer', SendAnswer)
+
+    socket.on("logout", function(data) {
+        let { logoutUser, availableDoctors } = data
+        let userid = logoutUser.userid;
+        socket.to(socketUser[logoutUser.userid]).emit("logout", "")
+        delete socketUser[userid];
+        let pos = user.indexOf(userid);
+        if (pos >= 0) user.splice(pos, 1);
+        console.log(user)
+        socket.emit('userList', user);
+        socket.broadcast.emit('userList', user);
+        availableDoctors.map(a => {
+            user.includes(a.userid) ? a.status = "online" : a.status = "offline";
+        });
+        console.log(logoutUser.userid)
+        socket.emit('userListDisplay', availableDoctors);
+        socket.broadcast.emit('userListDisplay', availableDoctors);
+
+    })
 
     // socket.on('disconnect', Disconnect)
 

@@ -66,3 +66,11 @@
     float: right;
     font-size: 12px;
 }
+
+.not-available-dot {
+    color: #F44336;
+    background: #fff;
+    padding: 2px;
+    float: right;
+    font-size: 12px;
+}
