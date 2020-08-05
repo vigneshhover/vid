@@ -19,7 +19,7 @@
         "pug": "2.0.0-beta11",
         "winston": "^3.2.1",
         "cors": "^2.8.5",
-        "express-fileupload": "^1.1.6",
+        "express-fileupload": "^1.1.9",
         "https": "^1.0.0",
         "object-path": "^0.11.4",
         "simple-peer": "^9.7.0",
